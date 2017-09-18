@@ -1,13 +1,13 @@
 Application Log
-Start: Mon Sep 18 14:14:12 2017
+Start: Mon Sep 18 14:26:44 2017
 
 WARNING: AudioDevice is not enabled. Set G3DSpecification::audio = true before invoking initGLG3D() to enable audio.
-Initializing System::findDataFile took 0.001342s
+Initializing System::findDataFile took 0.001097s
 
 Entering GApp::GApp()
 cwd = /Users/maxwellfoley/Documents/gcodex/data-files
 System::setAppDataDir("/Users/maxwellfoley/Documents/gcodex/data-files")
-Initializing System::findDataFile took 0.000949s
+Initializing System::findDataFile took 0.001201s
 Setting video mode
 Setting initial rendering state.
 Done setting initial state.
@@ -162,8 +162,8 @@ System = {
         Driver = "Unknown;"
         OpenGL version = "4.1 NVIDIA-10.14.20 355.10.05.15f03;"
         Textures = 16 ;
-        Texture coordinates = 1504894208 ;
-        Texture units = 1504894208 ;
+        Texture coordinates = 1413168384 ;
+        Texture units = 1413168384 ;
         GL_MAX_TEXTURE_SIZE = 16384 ;
         GL_MAX_CUBE_MAP_TEXTURE_SIZE = 16384 ;
         GL_MAX_COLOR_ATTACHMENTS = 8 ;
@@ -263,6 +263,7 @@ Done GApp::loadFont(...)
 Done GApp::GApp()
 
 Found scenes:
+  "White Cube" (./scene/whiteCube.Scene.Any)
   "Test Scene" (./test.Scene.Any)
   "G3D Debug Animation Seymour" (/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Animation_Seymour.Scene.Any)
   "G3D Debug Area Light" (/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Area_Light.Scene.Any)
@@ -353,14 +354,31 @@ WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
 WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
+WARNING: Output of vertex shader 'csPosition' not read by fragment shader
+WARNING: Output of vertex shader 'tan_Y' not read by fragment shader
+WARNING: Output of vertex shader 'tan_X' not read by fragment shader
+
+
+
+
+
+
+WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
+
+WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
+
+WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
+
 _____________________________________________________
 
     ###    Files Used    ###
 
 /Users/maxwellfoley/Documents/gcodex/data-files/.
+/Users/maxwellfoley/Documents/gcodex/data-files/./scene/whiteCube.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/./test.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/log.txt
 /Users/maxwellfoley/Documents/gcodex/data-files/model/CornellBox/CornellBox.zip
+/Users/maxwellfoley/Documents/gcodex/data-files/scene/model/CornellBox/CornellBox.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/font/arial.fnt
 /Users/maxwellfoley/g3d/G3D10/data-files/font/console-small.fnt
 /Users/maxwellfoley/g3d/G3D10/data-files/font/greek.fnt
@@ -435,6 +453,12 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PX.png
 /Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PY.png
 /Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PZ.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NX.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NY.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NZ.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PX.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PY.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PZ.png
 /Users/maxwellfoley/g3d/data10/common/material/blackrubber/blackrubber.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/material/chrome/chrome.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/material/metalcrate/metalcrate.UniversalMaterial.Any
@@ -444,6 +468,9 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.mtl
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.obj
+/Users/maxwellfoley/g3d/data10/common/model/cube/cube.obj
+/Users/maxwellfoley/g3d/data10/common/model/cube/default.mtl
+/Users/maxwellfoley/g3d/data10/common/model/cube/default.png
 /Users/maxwellfoley/g3d/data10/common/model/holodeck/holodeck.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/common/model/teapot/teapot.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/common/model/truckwheel/truckwheel.ArticulatedModel.Any

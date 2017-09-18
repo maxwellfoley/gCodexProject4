@@ -1,13 +1,13 @@
 Application Log
-Start: Mon Sep 18 14:14:40 2017
+Start: Mon Sep 18 14:27:33 2017
 
 WARNING: AudioDevice is not enabled. Set G3DSpecification::audio = true before invoking initGLG3D() to enable audio.
-Initializing System::findDataFile took 0.002131s
+Initializing System::findDataFile took 0.001133s
 
 Entering GApp::GApp()
 cwd = /Users/maxwellfoley/Documents/gcodex/data-files
 System::setAppDataDir("/Users/maxwellfoley/Documents/gcodex/data-files")
-Initializing System::findDataFile took 0.000931s
+Initializing System::findDataFile took 0.000979s
 Setting video mode
 Setting initial rendering state.
 Done setting initial state.
@@ -162,8 +162,8 @@ System = {
         Driver = "Unknown;"
         OpenGL version = "4.1 NVIDIA-10.14.20 355.10.05.15f03;"
         Textures = 16 ;
-        Texture coordinates = 1350110464 ;
-        Texture units = 1350110464 ;
+        Texture coordinates = 1349881088 ;
+        Texture units = 1349881088 ;
         GL_MAX_TEXTURE_SIZE = 16384 ;
         GL_MAX_CUBE_MAP_TEXTURE_SIZE = 16384 ;
         GL_MAX_COLOR_ATTACHMENTS = 8 ;
@@ -263,6 +263,7 @@ Done GApp::loadFont(...)
 Done GApp::GApp()
 
 Found scenes:
+  "White Cube" (./scene/whiteCube.Scene.Any)
   "Test Scene" (./test.Scene.Any)
   "G3D Debug Animation Seymour" (/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Animation_Seymour.Scene.Any)
   "G3D Debug Area Light" (/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Area_Light.Scene.Any)
@@ -353,11 +354,6 @@ WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
 WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-Warning: encountered command with null material
 WARNING: Output of vertex shader 'csPosition' not read by fragment shader
 WARNING: Output of vertex shader 'tan_Y' not read by fragment shader
 WARNING: Output of vertex shader 'tan_X' not read by fragment shader
@@ -366,37 +362,6 @@ WARNING: Output of vertex shader 'tan_X' not read by fragment shader
 
 
 
-
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'tan_Y' not read by fragment shader
-WARNING: Output of vertex shader 'tan_X' not read by fragment shader
-WARNING: Output of vertex shader 'texcoord1' not read by fragment shader
-
-WARNING: Output of vertex shader 'tan_Y' not read by fragment shader
-WARNING: Output of vertex shader 'tan_X' not read by fragment shader
-WARNING: Output of vertex shader 'texcoord1' not read by fragment shader
-
-WARNING: Output of vertex shader 'tan_Y' not read by fragment shader
-WARNING: Output of vertex shader 'tan_X' not read by fragment shader
-WARNING: Output of vertex shader 'texcoord1' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
 WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
@@ -409,24 +374,21 @@ _____________________________________________________
     ###    Files Used    ###
 
 /Users/maxwellfoley/Documents/gcodex/data-files/.
+/Users/maxwellfoley/Documents/gcodex/data-files/./scene/whiteCube.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/./test.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/log.txt
 /Users/maxwellfoley/Documents/gcodex/data-files/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/Documents/gcodex/data-files/model/vokselia_spawn/vokselia_spawn.zip
+/Users/maxwellfoley/Documents/gcodex/data-files/scene/model/CornellBox/CornellBox.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/font/arial.fnt
 /Users/maxwellfoley/g3d/G3D10/data-files/font/console-small.fnt
 /Users/maxwellfoley/g3d/G3D10/data-files/font/greek.fnt
 /Users/maxwellfoley/g3d/G3D10/data-files/font/icon.fnt
 /Users/maxwellfoley/g3d/G3D10/data-files/font/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/font/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/gui/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/gui/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/gui/osx-10.7.gtm
 /Users/maxwellfoley/g3d/G3D10/data-files/icon/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/icon/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/icon/tango.icn
 /Users/maxwellfoley/g3d/G3D10/data-files/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/AlphaFilter.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_AO.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_AO.vrt
@@ -438,15 +400,10 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_packBilateralKey.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_reconstructCSZ.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_reconstructCSZ.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_sample.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/BumpMap/BumpMap.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/Camera/Camera.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/DefaultRenderer/DefaultRenderer_OIT_writePixel.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/DefaultRenderer/DefaultRenderer_compositeWeightedBlendedOIT.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/DefaultRenderer/DefaultRenderer_deferredShade.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/DepthOfField/DepthOfField_blur.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/DepthOfField/DepthOfField_circleOfConfusion.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/DepthOfField/DepthOfField_composite.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_FXAA_13_quality.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_bloomExpose.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_composite.pix
@@ -460,10 +417,6 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/Light/Light.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/LightingEnvironment/LightingEnvironment_LightUniforms.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/LightingEnvironment/LightingEnvironment_environmentMapUniforms.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/LightingEnvironment/LightingEnvironment_uniforms.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/MotionBlur/MotionBlur_gather.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/MotionBlur/MotionBlur_neighborMinMax.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/MotionBlur/MotionBlur_tileMinMax.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_gbuffer.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_gbuffer.vrt
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_render.pix
@@ -473,7 +426,6 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/Texture/Texture_copy.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial_sample.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial_shade.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial_writeToGBuffer.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthOnly.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthOnly.vrt
@@ -481,8 +433,6 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthPeel.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_gbuffer.pix
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_gbuffer.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_render.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_render.vrt
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_vertex.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_vertexHelpers.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/compatibility.glsl
@@ -492,7 +442,6 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/g3dmath.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/lightMap.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/octahedral.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/reconstructFromDepth.glsl
 /Users/maxwellfoley/g3d/G3D10/data-files/shader/reverseReprojection.glsl
@@ -504,32 +453,27 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PX.png
 /Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PY.png
 /Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PZ.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/common/cubemap/noonclouds/noonclouds_bk.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/noonclouds/noonclouds_dn.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/noonclouds/noonclouds_ft.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/noonclouds/noonclouds_lf.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/noonclouds/noonclouds_rt.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/noonclouds/noonclouds_up.png
-/Users/maxwellfoley/g3d/data10/common/font/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/common/icon/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/common/ifs/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/common/image/model/vokselia_spawn/vokselia_spawn.zip
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NX.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NY.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NZ.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PX.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PY.png
+/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PZ.png
 /Users/maxwellfoley/g3d/data10/common/material/blackrubber/blackrubber.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/material/chrome/chrome.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/material/metalcrate/metalcrate.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/material/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/data10/common/material/oldgirder/oldgirder.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/material/rustymetal/rustymetal.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/material/sand/sand.UniversalMaterial.Any
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.mtl
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.obj
+/Users/maxwellfoley/g3d/data10/common/model/cube/cube.obj
+/Users/maxwellfoley/g3d/data10/common/model/cube/default.mtl
+/Users/maxwellfoley/g3d/data10/common/model/cube/default.png
 /Users/maxwellfoley/g3d/data10/common/model/holodeck/holodeck.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/common/model/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/data10/common/model/teapot/teapot.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/common/model/truckwheel/truckwheel.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/common/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/data10/common/model/vr/vive_1.5_controller.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Animation_Seymour.Scene.Any
 /Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Area_Light.Scene.Any
@@ -551,26 +495,11 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/common/scene/G3D_Test_Models.Scene.Any
 /Users/maxwellfoley/g3d/data10/common/scene/G3D_VR_Holodeck.Scene.Any
 /Users/maxwellfoley/g3d/data10/common/scene/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/data10/common/scene/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/common/voxel/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/cubemap/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/md2/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/md3/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/model/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/data10/game/model/viper/viper.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/game/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/music/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/data10/game/scene/atcs.Scene.Any
 /Users/maxwellfoley/g3d/data10/game/scene/beta.Scene.Any
-/Users/maxwellfoley/g3d/data10/game/scene/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/sound/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/game/voxel/model/vokselia_spawn/vokselia_spawn.zip
 /Users/maxwellfoley/g3d/data10/research/model/gallery/gallery.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/research/model/sportsCar/sportsCar.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/research/model/vokselia_spawn/vokselia_spawn.zip
-/Users/maxwellfoley/g3d/data10/research/model/vokselia_spawn/vokselia_spawn.zip/vokselia_spawn.mtl
-/Users/maxwellfoley/g3d/data10/research/model/vokselia_spawn/vokselia_spawn.zip/vokselia_spawn.obj
-/Users/maxwellfoley/g3d/data10/research/model/vokselia_spawn/vokselia_spawn.zip/vokselia_spawn.png
 /Users/maxwellfoley/g3d/data10/research/scene/G3D_Fireplace_Room.Scene.Any
 /Users/maxwellfoley/g3d/data10/research/scene/G3D_Fireplace_Room_(Emissive_Windows).Scene.Any
 /Users/maxwellfoley/g3d/data10/research/scene/G3D_Fireplace_Room_(No_Glass).Scene.Any
@@ -595,5 +524,4 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/research/scene/G3D_Sports_Car.Scene.Any
 /Users/maxwellfoley/g3d/data10/research/scene/G3D_Sports_Car_(White).Scene.Any
 /Users/maxwellfoley/g3d/data10/research/scene/G3D_VR_Gallery.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/model/vokselia_spawn/vokselia_spawn.zip
 

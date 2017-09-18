@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+App	source/App.cpp	/^App::App(const GApp::Settings& settings) : GApp(settings) {$/;"	f	class:App
+App	source/App.h	/^class App : public GApp {$/;"	c
+main	source/App.cpp	/^int main(int argc, const char* argv[]) {$/;"	f
+makeGUI	source/App.cpp	/^void App::makeGUI() {$/;"	f	class:App
+onAI	source/App.cpp	/^void App::onAI() {$/;"	f	class:App
+onCleanup	source/App.cpp	/^void App::onCleanup() {$/;"	f	class:App
+onEvent	source/App.cpp	/^bool App::onEvent(const GEvent& event) {$/;"	f	class:App
+onGraphics2D	source/App.cpp	/^void App::onGraphics2D(RenderDevice* rd, Array<shared_ptr<Surface2D> >& posed2D) {$/;"	f	class:App
+onGraphics3D	source/App.cpp	/^void App::onGraphics3D(RenderDevice* rd, Array<shared_ptr<Surface> >& allSurfaces) {$/;"	f	class:App
+onInit	source/App.cpp	/^void App::onInit() {$/;"	f	class:App
+onNetwork	source/App.cpp	/^void App::onNetwork() {$/;"	f	class:App
+onPose	source/App.cpp	/^void App::onPose(Array<shared_ptr<Surface> >& surface, Array<shared_ptr<Surface2D> >& surface2D) {$/;"	f	class:App
+onSimulation	source/App.cpp	/^void App::onSimulation(RealTime rdt, SimTime sdt, SimTime idt) {$/;"	f	class:App
+onUserInput	source/App.cpp	/^void App::onUserInput(UserInput* ui) {$/;"	f	class:App
+override	source/App.h	/^    virtual bool onEvent(const GEvent& e) override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onAI() override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onCleanup() override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onGraphics2D(RenderDevice* rd, Array<shared_ptr<Surface2D> >& surface2D) override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onGraphics3D(RenderDevice* rd, Array<shared_ptr<Surface> >& surface3D) override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onInit() override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onNetwork() override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onPose(Array<shared_ptr<Surface> >& posed3D, Array<shared_ptr<Surface2D> >& posed2D) override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onSimulation(RealTime rdt, SimTime sdt, SimTime idt) override;$/;"	m	class:App
+override	source/App.h	/^    virtual void onUserInput(UserInput* ui) override;$/;"	m	class:App
