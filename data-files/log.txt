@@ -1,13 +1,13 @@
 Application Log
-Start: Mon Sep 18 14:27:33 2017
+Start: Fri Sep 29 15:28:48 2017
 
 WARNING: AudioDevice is not enabled. Set G3DSpecification::audio = true before invoking initGLG3D() to enable audio.
-Initializing System::findDataFile took 0.001133s
+Initializing System::findDataFile took 0.001512s
 
 Entering GApp::GApp()
 cwd = /Users/maxwellfoley/Documents/gcodex/data-files
 System::setAppDataDir("/Users/maxwellfoley/Documents/gcodex/data-files")
-Initializing System::findDataFile took 0.000979s
+Initializing System::findDataFile took 0.000827s
 Setting video mode
 Setting initial rendering state.
 Done setting initial state.
@@ -162,8 +162,8 @@ System = {
         Driver = "Unknown;"
         OpenGL version = "4.1 NVIDIA-10.14.20 355.10.05.15f03;"
         Textures = 16 ;
-        Texture coordinates = 1349881088 ;
-        Texture units = 1349881088 ;
+        Texture coordinates = 1449155840 ;
+        Texture units = 1449155840 ;
         GL_MAX_TEXTURE_SIZE = 16384 ;
         GL_MAX_CUBE_MAP_TEXTURE_SIZE = 16384 ;
         GL_MAX_COLOR_ATTACHMENTS = 8 ;
@@ -247,9 +247,9 @@ System = {
         Adapter0 ={ 
             hostname = ";"
             name = "en0;"
-            ip = "172. 27. 63. 96"; 
+            ip = "192.168.  1.  6"; 
             subnet = "255.255.255.  0"; 
-            broadcast = "172. 27. 63.255"; 
+            broadcast = "192.168.  1.255"; 
             mac = "80:e6:50:01:df:40"; 
         }; 
     }; 
@@ -263,6 +263,8 @@ Done GApp::loadFont(...)
 Done GApp::GApp()
 
 Found scenes:
+  "My Scene 1 (White cube rotated)" (./scene/myScene1.Scene.Any)
+  "My Scene 2 (Cornell box)" (./scene/myScene2.Scene.Any)
   "White Cube" (./scene/whiteCube.Scene.Any)
   "Test Scene" (./test.Scene.Any)
   "G3D Debug Animation Seymour" (/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Animation_Seymour.Scene.Any)
@@ -374,6 +376,8 @@ _____________________________________________________
     ###    Files Used    ###
 
 /Users/maxwellfoley/Documents/gcodex/data-files/.
+/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene1.Scene.Any
+/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene2.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/./scene/whiteCube.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/./test.Scene.Any
 /Users/maxwellfoley/Documents/gcodex/data-files/log.txt
@@ -468,9 +472,6 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.mtl
 /Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.obj
-/Users/maxwellfoley/g3d/data10/common/model/cube/cube.obj
-/Users/maxwellfoley/g3d/data10/common/model/cube/default.mtl
-/Users/maxwellfoley/g3d/data10/common/model/cube/default.png
 /Users/maxwellfoley/g3d/data10/common/model/holodeck/holodeck.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/common/model/teapot/teapot.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/common/model/truckwheel/truckwheel.ArticulatedModel.Any
@@ -495,6 +496,8 @@ _____________________________________________________
 /Users/maxwellfoley/g3d/data10/common/scene/G3D_Test_Models.Scene.Any
 /Users/maxwellfoley/g3d/data10/common/scene/G3D_VR_Holodeck.Scene.Any
 /Users/maxwellfoley/g3d/data10/common/scene/model/CornellBox/CornellBox.zip
+/Users/maxwellfoley/g3d/data10/game/model/crate/crate-unique-materials.mtl
+/Users/maxwellfoley/g3d/data10/game/model/crate/crate-unique-materials.obj
 /Users/maxwellfoley/g3d/data10/game/model/viper/viper.ArticulatedModel.Any
 /Users/maxwellfoley/g3d/data10/game/scene/atcs.Scene.Any
 /Users/maxwellfoley/g3d/data10/game/scene/beta.Scene.Any
