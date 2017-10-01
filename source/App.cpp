@@ -54,8 +54,56 @@ App::App(const GApp::Settings& settings) : GApp(settings) {
 // not in the constructor so that common exceptions will be
 // automatically caught.
 void App::onInit() {
+	
+	TextOutput * to = new TextOutput("scene/myScene3.Scene.Any");
+	
+	to->printf("// -*- c++ -*-\n");
+	to->printf("	{\n");
+	to->printf("    name = \"My Scene 3 (Staircase)\";");
+	    
+		to->printf(" 	    models = {\n");
+		to->printf("        stair = ArticulatedModel::Specification {\n");
+	  to->printf("           filename = \"model/crate/crate.obj\";");
+		to->printf("             preprocess = {\n");
+		to->printf(" 							setMaterial(all(), \"wood.jpg\");\n");
+		to->printf(" 							transformGeometry(all(), Matrix4::scale(1.0, 0.1, 0.1));\n");
+		to->printf("             };\n");
+		to->printf(" 	       };\n");
+		to->printf("     };\n");
+	    
+		to->printf("     entities = {\n");
+		to->printf("        skybox = Skybox {\n");
+		to->printf(" 					 texture = \"cubemap/whiteroom/whiteroom-*.png\";\n");
+		to->printf("        };\n");
+	 	to->printf("       sun = Light {\n");
+	  	to->printf("           attenuation = ( 0, 0, 1 );\n");
+		to->printf("             bulbPower = Power3(4e+006);\n");
+		to->printf("             frame = CFrame::fromXYZYPRDegrees(-15, 207, -41, -164, -77, 77);\n");
+		to->printf("             shadowMapSize = Vector2int16(2048, 2048);\n");
+		to->printf("             spotHalfAngleDegrees = 5;\n");
+		to->printf("             rectangular = true;\n");
+		to->printf("             type = \"SPOT\";\n");
+	 	to->printf("        };\n");
+		for(int i = 0; i < 50; i++)
+		{
+			to->printf("         cube%u = VisibleEntity {\n",i);
+			to->printf("             model = \"stair\";\n");
+			float height = i*.05;
+			float rot = i*7.5;
+			to->printf("             frame = CFrame::fromXYZYPRDegrees(0, %f, 0, %f, 0, 0);\n",height,rot);
+			to->printf("         };\n");
+		}
+		to->printf("         camera = Camera {\n");
+		to->printf("             frame = CFrame::fromXYZYPRDegrees(0, 0, 5);\n");
+		to->printf("         };\n");
+		to->printf("     };\n");
+		to->printf(" };\n");
+	
+		to->commit();
+		
+		delete to;
 		debugPrintf("Target frame rate = %f Hz\n", realTimeTargetDuration());
-
+	//	debugPrint("System::appDataDir() %s",System::appDataDir());
     GApp::onInit();
     setFrameDuration(1.0f / 60.0f);
 
