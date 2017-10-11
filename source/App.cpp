@@ -45,6 +45,157 @@ int main(int argc, const char* argv[]) {
     return App(settings).run();
 }
 
+void makeHeightField(shared_ptr<G3D::Image> img, float horizScale, float yScale)
+{
+	TextOutput * to = new TextOutput("model/heightmap.off");
+	
+	//each pixel will be a vertice, the image will be surrounded by an outer ring of vertices to form the border
+	int numFaces = (img->width() + 1)*(img->height()+1);
+	int numVertices = (img->width() + 2)*(img->height()+2);
+	int numEdges = (img->width()+1) * img->height() * 2;
+
+	to->printf("OFF\n#\n# heightfield.off\n# \n");
+  to->printf("%i %i %i\n",numVertices,numFaces,numEdges);
+	
+	//print the vertices
+	
+	//print top border 
+	for(int i = 0; i < img->width()+2; i++)
+	{
+		float x = (i)*horizScale - img->width()/2;
+		float y = -yScale; 
+		float z = img->height()*horizScale;
+		to->printf("%f %f %f\n",x,y,z);
+
+	}
+	
+	for(int j = 0; j < img->height(); j++)
+	{
+		//print vertice in left border
+		float x = -img->width()/2;
+		float y = -yScale; 
+		float z = (img->height()-(j+1))*horizScale;
+		to->printf("%f %f %f\n",x,y,z);
+
+		for(int i = 0; i < img->width(); i++)
+		{
+			Color1unorm8 color; 
+			img->get(G3D::Point2int32(i,j),color);
+			float x = (i+1)*horizScale - img->width()/2;
+			float y = float(color.value) * yScale -yScale; 
+			float z = (img->height()-(j+1))*horizScale;
+			to->printf("%f %f %f\n",x,y,z);
+		}
+		
+		//print vertice in right border
+		 x = (img->width()+1)*horizScale - img->width()/2;
+		 y = -yScale; 
+		 z = (img->height()-(j+1))*horizScale;
+		to->printf("%f %f %f\n",x,y,z);
+
+	}
+	//print bottom border 
+	for(int i = 0; i < img->width()+2; i++)
+	{
+		float x = (i)*horizScale - img->width()/2;
+		float y = -yScale; 
+		float z = 0.0;
+		to->printf("%f %f %f\n",x,y,z);
+
+	}
+	//time for the faces
+	for(int j = 0; j < img->height()+1; j++)
+	{
+		for(int i = 0; i < img->width()+1; i++)
+		{
+			int topLeftV = j*(img->width()+2) + i;
+			int topRightV = topLeftV + 1; 
+			int bottomLeftV = topLeftV + img->width() +2;
+			int bottomRightV = bottomLeftV + 1; 
+			
+			to->printf("4 %i %i %i %i\n",topLeftV,topRightV,bottomRightV,bottomLeftV);
+
+		}
+	}
+	 
+	to->commit();
+	delete to;
+
+}
+//slices is number of slices as in a cake, how close to a true cylinder it will be 
+//segments is vertical divisions
+void makeCylinder(float radius, float height, int slices, int segments)
+{
+	TextOutput * to = new TextOutput("model/cylinder.off");
+	
+	//one to originate each edge in the ring, plus an extra vertice per slice to cap, plus two for the center of top and bottom
+	int numVertices = slices*(segments+1)+2;
+	int numFaces = slices*(segments+2);
+	//one for each edge in the ring, plus one vertical edge per slice,and an extra ring on the caps. then two extra edges on the caps for spokes
+	int numEdges = slices*(segments*2+3);
+	
+	to->printf("OFF\n#\n# cylinder.off\n# \n");
+  to->printf("%i %i %i\n",numVertices,numFaces,numEdges);
+	
+	float PI = 3.14195;
+	
+	//print the vertices
+	
+	for(int j = 0; j <segments+1; j++)
+	{
+		for(int i = 0; i < slices; i++)
+		{
+
+			float angle = (2*PI/slices)*i;
+			float x = cos(angle)*radius;
+			float y = (height/segments)*j-height/2.0; 
+			float z = sin(angle)*radius;
+			to->printf("%f %f %f\n",x,y,z);
+		}
+	}
+	
+	//hub of bottom cap 
+	to->printf("0 0 0\n");
+	
+	//hub of top cap
+	to->printf("0 %f 0\n", height);
+
+	
+	//print the faces
+	for(int j = 0; j <segments; j++)
+	{
+		for(int i = 0; i < slices; i++)
+		{
+			int topLeftV = ((j+1)*slices)+i;
+			int topRightV = i+1 < slices ? ((j+1)*slices)+i+1 : (j+1)*slices; 
+			int bottomLeftV = (j*slices)+i;
+			int bottomRightV = i+1 < slices ? (j*slices)+i+1 : j*slices; 
+			
+			to->printf("4 %i %i %i %i\n",topLeftV,topRightV,bottomRightV,bottomLeftV);
+		}
+	}	
+	
+	//now do the caps
+	int bottomHub = slices*(segments+1);
+	int topHub = slices*(segments+1)+1;
+	
+	for(int i = 0; i < slices; i++)
+	{
+		int leftV = i;
+		int rightV = i+1 < slices ? i+1 : 0; 		
+		to->printf("3 %i %i %i\n",leftV,rightV,bottomHub);
+		
+		int otherLeftV = segments*slices +i;
+		int otherRightV = i+1 < slices ? segments*slices +i+1 : segments*slices;
+		
+		to->printf("3 %i %i %i\n",otherLeftV,topHub,otherRightV);
+
+	}
+
+	to->commit();
+	delete to;
+
+}
 
 App::App(const GApp::Settings& settings) : GApp(settings) {
 }
@@ -54,6 +205,7 @@ App::App(const GApp::Settings& settings) : GApp(settings) {
 // not in the constructor so that common exceptions will be
 // automatically caught.
 void App::onInit() {
+	
 	
 	TextOutput * to = new TextOutput("scene/myScene3.Scene.Any");
 	
@@ -102,6 +254,8 @@ void App::onInit() {
 		to->commit();
 		
 		delete to;
+		
+		
 		debugPrintf("Target frame rate = %f Hz\n", realTimeTargetDuration());
 	//	debugPrint("System::appDataDir() %s",System::appDataDir());
     GApp::onInit();
@@ -127,20 +281,56 @@ void App::onInit() {
         //developerWindow->sceneEditorWindow->selectedSceneName()  // Load the first scene encountered 
         );
 }
+float heightVal = 5.0;
+float radiusVal = 1.0;
 
+String heightMapFilename = "";
+float heightMapHorizScaleVal = 1.0;
+float heightMapYScaleVal = 1.0;
 
 void App::makeGUI() {
     debugWindow->setVisible(true);
     developerWindow->videoRecordDialog->setEnabled(true);
 
-    GuiPane* infoPane = debugPane->addPane("Info", GuiTheme::ORNATE_PANE_STYLE);
-    
-    // Example of how to add debugging controls
-    infoPane->addLabel("You can add GUI controls");
-    infoPane->addLabel("in App::onInit().");
-    infoPane->addButton("Exit", [this]() { m_endProgram = true; });
+    GuiPane* infoPane = debugPane->addPane("Cylinder time", GuiTheme::ORNATE_PANE_STYLE);
+		// add cylinder to scene
+		infoPane->addLabel("Create a cylinder");
+
+		infoPane->addNumberBox("height", &heightVal, " units")->setUnitsSize(30);
+		infoPane->addNumberBox("radius", &radiusVal, " units")->setUnitsSize(30);
+		infoPane->addButton("Go", [this, hv = &heightVal, rv = &radiusVal]() { 
+			debugPrintf("User entered some radius %f and height %f\n",*rv,*hv);
+			makeCylinder(*rv,*hv,24,10);
+			ArticulatedModel::clearCache();
+			loadScene("My Scene 5 (My new cylinder mesh)");
+			
+		 });    
     infoPane->pack();
 
+
+		//add heightmap to scene
+		GuiPane* hmPane = debugPane->addPane("Heightmap from image", GuiTheme::ORNATE_PANE_STYLE);
+		// add cylinder to scene
+		hmPane->addLabel("Create a heightmap");
+		hmPane->addTextBox("file name", &heightMapFilename);
+		hmPane->addNumberBox("horizontal scale", &heightMapHorizScaleVal, " units")->setUnitsSize(30);
+		hmPane->addNumberBox("height scale", &heightMapYScaleVal, " units")->setUnitsSize(30);
+		hmPane->addButton("Go", [this, file = &heightMapFilename, hs = &heightMapHorizScaleVal, ys = &heightMapYScaleVal]() { 
+			debugPrintf("User did heightmap stuff");
+			
+			if (FileSystem::exists(*file)) {
+				shared_ptr<Image> img = Image::fromFile(*file); 
+				makeHeightField(img,*hs,*ys);
+				ArticulatedModel::clearCache();
+				loadScene("My Scene 6 (My new heightmap mesh)");
+			}
+			else {
+				debugPrintf("couldn't find that file %s",(*file).c_str()); 
+			}
+		 });    
+		hmPane->pack();
+
+		
     // More examples of debugging GUI controls:
     // debugPane->addCheckBox("Use explicit checking", &explicitCheck);
     // debugPane->addTextBox("Name", &myName);
@@ -158,6 +348,7 @@ void App::makeGUI() {
 // for you to modify. If you aren't changing the hardware rendering strategy, you can
 // delete this override entirely.
 void App::onGraphics3D(RenderDevice* rd, Array<shared_ptr<Surface> >& allSurfaces) {
+	
     if (! scene()) {
         if ((submitToDisplayMode() == SubmitToDisplayMode::MAXIMIZE_THROUGHPUT) && (!rd->swapBuffersAutomatically())) {
             swapBuffers();

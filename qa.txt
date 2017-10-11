@@ -3,15 +3,27 @@
 shared_ptr gets deleted automatically (garbage collected) when not in use, and with * you have to delete it in the code. 
 
 2. How does G3D know where the scene files are located?
-
+It makes a table of all filenames in the directory and then puts the ones with .scene.any in the scene list
 
 3. Why should you to put your initialization code into App::onInit instead of constructor App::App? (Tip: There are many reasons. Try throwing an exception from each, and consider the implications of throwing an exception from a class's constructor.)
 
+not sure i really understand this, looking at the call stack didnt help, but i guess you could use a try-catch block in App:run if you wanted to catch it, whereas the constructor might be called a bunch of places, and if it doesnt work you wont have an app at all
+
 
 4. What is the call chain that invokes App::onGraphics3D?
-
+GApp:onGraphics
+GApp:loadScene
+App:onInit
+GApp:beginRun
+GApp:onRun
+GApp:run
 
 5. Where is the file cube.obj stored on the file system? How did the Scene parser know to load it from there?
 
+usr/g3d/G3D10/build/data/model/cube/cube.obj
+
+It calls System::findDataFile, which among other things finds stuff in System.appDataDir() +"data/". System::appDataDir() must be usr/g3d/G3D10/build/
 
 6.You can create a material in a scene file from a Color3. There are many more ways to construct a G3D material, however. One of these takes separate lambertian, glossy, emissive, and transmissive values. Speculate on why a homogeneous material (i.e., one without a pattern or image) would require four separate “colors” in its specification. 
+
+To model objects with strange reflective properties. Like if an object is red but reflects blue light… why not I guess
