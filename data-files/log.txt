@@ -1,13 +1,13 @@
 Application Log
-Start: Tue Oct 10 21:25:50 2017
+Start: Wed Nov  1 21:06:22 2017
 
 WARNING: AudioDevice is not enabled. Set G3DSpecification::audio = true before invoking initGLG3D() to enable audio.
-Initializing System::findDataFile took 0.001194s
+Initializing System::findDataFile took 0.005463s
 
 Entering GApp::GApp()
 cwd = /Users/maxwellfoley/Documents/gcodex/data-files
 System::setAppDataDir("/Users/maxwellfoley/Documents/gcodex/data-files")
-Initializing System::findDataFile took 0.000936s
+Initializing System::findDataFile took 0.001051s
 Setting video mode
 Setting initial rendering state.
 Done setting initial state.
@@ -162,8 +162,8 @@ System = {
         Driver = "Unknown;"
         OpenGL version = "4.1 NVIDIA-10.14.20 355.10.05.15f03;"
         Textures = 16 ;
-        Texture coordinates = 1414520064 ;
-        Texture units = 1414520064 ;
+        Texture coordinates = 1516375296 ;
+        Texture units = 1516375296 ;
         GL_MAX_TEXTURE_SIZE = 16384 ;
         GL_MAX_CUBE_MAP_TEXTURE_SIZE = 16384 ;
         GL_MAX_COLOR_ATTACHMENTS = 8 ;
@@ -269,6 +269,7 @@ Found scenes:
   "My Scene 4 (My new cube mesh)" (./scene/myScene4.Scene.Any)
   "My Scene 5 (My new cylinder mesh)" (./scene/myScene5.Scene.Any)
   "My Scene 6 (My new heightmap mesh)" (./scene/myScene6.Scene.Any)
+  "My Scene 7 (My new glass mesh)" (./scene/myScene7.Scene.Any)
   "White Cube" (./scene/whiteCube.Scene.Any)
   "Test Scene" (./test.Scene.Any)
   "G3D Debug Animation Seymour" (/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Animation_Seymour.Scene.Any)
@@ -359,183 +360,4 @@ WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
 
 
 WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-
-
-
-
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'g3d_TexCoord' not read by fragment shader
-
-WARNING: Output of vertex shader 'csPosition' not read by fragment shader
-WARNING: Output of vertex shader 'tan_Y' not read by fragment shader
-WARNING: Output of vertex shader 'tan_X' not read by fragment shader
-
-_____________________________________________________
-
-    ###    Files Used    ###
-
-/Users/maxwellfoley/Documents/gcodex/data-files/.
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene1.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene2.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene3.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene4.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene5.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/myScene6.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./scene/whiteCube.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/./test.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/example.png
-/Users/maxwellfoley/Documents/gcodex/data-files/log.txt
-/Users/maxwellfoley/Documents/gcodex/data-files/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/Documents/gcodex/data-files/model/heightmap.off
-/Users/maxwellfoley/Documents/gcodex/data-files/model/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/Documents/gcodex/data-files/scene/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/Documents/gcodex/data-files/scene/myScene3.Scene.Any
-/Users/maxwellfoley/Documents/gcodex/data-files/wood.jpg
-/Users/maxwellfoley/g3d/G3D10/data-files/font/arial.fnt
-/Users/maxwellfoley/g3d/G3D10/data-files/font/console-small.fnt
-/Users/maxwellfoley/g3d/G3D10/data-files/font/greek.fnt
-/Users/maxwellfoley/g3d/G3D10/data-files/font/icon.fnt
-/Users/maxwellfoley/g3d/G3D10/data-files/font/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/gui/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/gui/osx-10.7.gtm
-/Users/maxwellfoley/g3d/G3D10/data-files/icon/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/icon/tango.icn
-/Users/maxwellfoley/g3d/G3D10/data-files/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AlphaFilter.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_AO.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_AO.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_blur.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_blur.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_constants.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_minify.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_minify.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_packBilateralKey.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_reconstructCSZ.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/AmbientOcclusion/AmbientOcclusion_reconstructCSZ.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/BumpMap/BumpMap.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Camera/Camera.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/DefaultRenderer/DefaultRenderer_OIT_writePixel.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/DefaultRenderer/DefaultRenderer_deferredShade.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_FXAA_13_quality.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_bloomExpose.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_composite.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Film/Film_toneMap.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/GBuffer/GBuffer.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/GFont/GFont_render.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/GFont/GFont_render.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/GaussianBlur/GaussianBlur_apply.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/GuiTheme/GuiTheme_render.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/GuiTheme/GuiTheme_render.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Light/Light.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/LightingEnvironment/LightingEnvironment_LightUniforms.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/LightingEnvironment/LightingEnvironment_environmentMapUniforms.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_gbuffer.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_gbuffer.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_render.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/SkyboxSurface/SkyboxSurface_render.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/TemporalFilter/TemporalFilter_apply.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Texture/Texture.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/Texture/Texture_copy.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial_sample.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalMaterial/UniversalMaterial_writeToGBuffer.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthOnly.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthOnly.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthOnlyNonOpaque.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_depthPeel.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_gbuffer.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_gbuffer.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_vertex.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/UniversalSurface/UniversalSurface_vertexHelpers.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/compatibility.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/default.vrt
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/deferredHelpers.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/depthPeel.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/g3dmath.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/lightMap.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/octahedral.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/reconstructFromDepth.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/reverseReprojection.glsl
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/unlit.pix
-/Users/maxwellfoley/g3d/G3D10/data-files/shader/unlit.vrt
-/Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-NX.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-NY.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-NZ.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PX.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PY.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/cornellbox/empty-RG-PZ.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NX.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NY.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-NZ.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PX.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PY.png
-/Users/maxwellfoley/g3d/data10/common/cubemap/whiteroom/whiteroom-PZ.png
-/Users/maxwellfoley/g3d/data10/common/material/blackrubber/blackrubber.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/material/chrome/chrome.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/material/metalcrate/metalcrate.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/material/oldgirder/oldgirder.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/material/rustymetal/rustymetal.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/material/sand/sand.UniversalMaterial.Any
-/Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.mtl
-/Users/maxwellfoley/g3d/data10/common/model/CornellBox/CornellBox.zip/CornellBox-Original.obj
-/Users/maxwellfoley/g3d/data10/common/model/holodeck/holodeck.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/common/model/teapot/teapot.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/common/model/truckwheel/truckwheel.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/common/model/vr/vive_1.5_controller.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Animation_Seymour.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Area_Light.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Cubemap.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Heightfield.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Teapot.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Transparency.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Debug_Triangle.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Cornell_Box-empty-cyan-orange.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Cornell_Box.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Cornell_Box_(Glossy).Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Cornell_Box_(Mirror).Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Cornell_Box_(Spheres).Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Cornell_Box_(Water).Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Simple_Whiteroom.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Sponza.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Sponza_(No_Materials).Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Sponza_(White).Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_Test_Models.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/G3D_VR_Holodeck.Scene.Any
-/Users/maxwellfoley/g3d/data10/common/scene/model/CornellBox/CornellBox.zip
-/Users/maxwellfoley/g3d/data10/game/model/viper/viper.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/game/scene/atcs.Scene.Any
-/Users/maxwellfoley/g3d/data10/game/scene/beta.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/model/gallery/gallery.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/research/model/sportsCar/sportsCar.ArticulatedModel.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Fireplace_Room.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Fireplace_Room_(Emissive_Windows).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Fireplace_Room_(No_Glass).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Living_Room.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Living_Room_(Emissive_Windows).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Minecraft.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Salle_de_Bain.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_San_Miguel.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_San_Miguel_(Low_Poly).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_San_Miguel_(Old).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sibenik.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sibenik_(Statue).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Simple_Cloud.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Simple_Motion.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Simple_Opening_Door.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Simple_Particles.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Simple_White_Furnace_(lambertian).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Simple_White_Furnace_(smoothness=0.5).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sponza_(Glossy).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sponza_(Statue).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sponza_(Volumetric_Shadows).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sports_Car.Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_Sports_Car_(White).Scene.Any
-/Users/maxwellfoley/g3d/data10/research/scene/G3D_VR_Gallery.Scene.Any
 

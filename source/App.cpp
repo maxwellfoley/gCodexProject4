@@ -1,5 +1,7 @@
 /** \file App.cpp */
 #include "App.h"
+#include "Raycaster.h"
+
 
 // Tells C++ to invoke command-line main() function even on OS X and Win32.
 G3D_START_AT_MAIN();
@@ -121,6 +123,118 @@ void makeHeightField(shared_ptr<G3D::Image> img, float horizScale, float yScale)
 	to->commit();
 	delete to;
 
+}
+
+void makeGlass(int slices)
+{
+	std::vector<G3D::Point2int32> curve;
+	curve.push_back(G3D::Point2int32(269,259));
+	curve.push_back(G3D::Point2int32(286,255));
+	curve.push_back(G3D::Point2int32(300,254));
+	curve.push_back(G3D::Point2int32(317,249));
+	curve.push_back(G3D::Point2int32(332,246));
+	curve.push_back(G3D::Point2int32(344,220));
+	curve.push_back(G3D::Point2int32(353,202));
+	curve.push_back(G3D::Point2int32(361,175));
+	curve.push_back(G3D::Point2int32(363,154));
+	curve.push_back(G3D::Point2int32(360,101));
+	curve.push_back(G3D::Point2int32(354,74));
+	curve.push_back(G3D::Point2int32(346,49));
+	curve.push_back(G3D::Point2int32(340,32));
+	curve.push_back(G3D::Point2int32(347,31));
+	curve.push_back(G3D::Point2int32(355,46));
+	curve.push_back(G3D::Point2int32(364,69));
+	curve.push_back(G3D::Point2int32(368,96));
+	curve.push_back(G3D::Point2int32(372,131));
+	curve.push_back(G3D::Point2int32(374,154));
+	curve.push_back(G3D::Point2int32(369,181));
+	curve.push_back(G3D::Point2int32(360,206));
+	curve.push_back(G3D::Point2int32(348,227));
+	curve.push_back(G3D::Point2int32(321,258));
+	curve.push_back(G3D::Point2int32(304,267));
+	curve.push_back(G3D::Point2int32(281,275));
+	curve.push_back(G3D::Point2int32(272,279));
+	curve.push_back(G3D::Point2int32(269,290));
+	curve.push_back(G3D::Point2int32(264,322));
+	curve.push_back(G3D::Point2int32(262,372));
+	curve.push_back(G3D::Point2int32(266,415));
+	curve.push_back(G3D::Point2int32(272,444));
+	curve.push_back(G3D::Point2int32(280,456));
+	curve.push_back(G3D::Point2int32(498,467));
+	curve.push_back(G3D::Point2int32(323,478));
+	curve.push_back(G3D::Point2int32(344,461));
+	curve.push_back(G3D::Point2int32(346,490));
+	curve.push_back(G3D::Point2int32(274,490));	
+	TextOutput * to = new TextOutput("model/glass.off");
+	
+	//basically this is all analogous to the cylinder, only innerCurve.size() + outerCurver.size() is one greater than segments
+	int numVertices = slices*curve.size() + 2;
+	int numFaces = slices*(curve.size() +1);
+	int numEdges = slices*(curve.size()*2+1); 
+
+	to->printf("OFF\n#\n# glass.off\n# \n");
+	to->printf("%i %i %i\n",numVertices,numFaces,numEdges);
+
+	float PI = 3.14195;
+	
+	//print the vertices
+	
+for(std::vector<G3D::Point2int32>::iterator it = curve.begin(); it != curve.end(); ++it) 
+{	
+		for(int i = 0; i < slices; i++)
+		{
+
+
+			float angle = (2*PI/slices)*i;
+			float x = cos(angle)*((*it).x-260);
+			float y = 200-(*it).y; 
+			float z = sin(angle)*((*it).x-260); 
+			to->printf("%f %f %f\n",x,y,z);
+		}
+	}
+	
+	//hub of bottom cap 
+	to->printf("0 %f 0\n",200.0-250.0);
+	
+	//hub of top cap
+	to->printf("0 %f 0\n",200.0-490.0);
+
+	
+	//print the faces
+	for(int j = 0; j < int(curve.size()-1); j++)
+	{
+		for(int i = 0; i < slices; i++)
+		{
+			int topLeftV = ((j+1)*slices)+i;
+			int topRightV = i+1 < slices ? ((j+1)*slices)+i+1 : (j+1)*slices; 
+			int bottomLeftV = (j*slices)+i;
+			int bottomRightV = i+1 < slices ? (j*slices)+i+1 : j*slices; 
+			
+			to->printf("4 %i %i %i %i\n",topLeftV,topRightV,bottomRightV,bottomLeftV);
+		}
+	}	
+	
+	//now do the caps
+	int bottomHub = slices*curve.size();
+	int topHub = slices*curve.size()+1;
+	
+	for(int i = 0; i < slices; i++)
+	{
+		int leftV = i;
+		int rightV = i+1 < slices ? i+1 : 0; 		
+		to->printf("3 %i %i %i\n",leftV,rightV,bottomHub);
+		
+		int otherLeftV = (curve.size()-1)*slices +i;
+		int otherRightV = i+1 < slices ? (curve.size()-1)*slices +i+1 : (curve.size()-1)*slices;
+		
+		to->printf("3 %i %i %i\n",otherLeftV,topHub,otherRightV);
+
+	}
+
+	to->commit();
+	delete to;
+	
+		
 }
 //slices is number of slices as in a cake, how close to a true cylinder it will be 
 //segments is vertical divisions
@@ -284,9 +398,12 @@ void App::onInit() {
 float heightVal = 5.0;
 float radiusVal = 1.0;
 
-String heightMapFilename = "";
-float heightMapHorizScaleVal = 1.0;
-float heightMapYScaleVal = 1.0;
+int renderWidth = 1; 
+int renderHeight = 1;
+
+bool fixedPrimitives = false;
+bool multithreading = false;
+int indirectRays = 0;
 
 void App::makeGUI() {
     debugWindow->setVisible(true);
@@ -306,41 +423,48 @@ void App::makeGUI() {
 			
 		 });    
     infoPane->pack();
-
-
-		//add heightmap to scene
-		GuiPane* hmPane = debugPane->addPane("Heightmap from image", GuiTheme::ORNATE_PANE_STYLE);
-		// add cylinder to scene
-		hmPane->addLabel("Create a heightmap");
-		hmPane->addTextBox("file name", &heightMapFilename);
-		hmPane->addNumberBox("horizontal scale", &heightMapHorizScaleVal, " units")->setUnitsSize(30);
-		hmPane->addNumberBox("height scale", &heightMapYScaleVal, " units")->setUnitsSize(30);
-		hmPane->addButton("Go", [this, file = &heightMapFilename, hs = &heightMapHorizScaleVal, ys = &heightMapYScaleVal]() { 
-			debugPrintf("User did heightmap stuff");
-			
-			if (FileSystem::exists(*file)) {
-				shared_ptr<Image> img = Image::fromFile(*file); 
-				makeHeightField(img,*hs,*ys);
-				ArticulatedModel::clearCache();
-				loadScene("My Scene 6 (My new heightmap mesh)");
-			}
-			else {
-				debugPrintf("couldn't find that file %s",(*file).c_str()); 
-			}
-		 });    
-		hmPane->pack();
-
 		
-    // More examples of debugging GUI controls:
-    // debugPane->addCheckBox("Use explicit checking", &explicitCheck);
-    // debugPane->addTextBox("Name", &myName);
-    // debugPane->addNumberBox("height", &height, "m", GuiTheme::LINEAR_SLIDER, 1.0f, 2.5f);
-    // button = debugPane->addButton("Run Simulator");
-    // debugPane->addButton("Generate Heightfield", [this](){ generateHeightfield(); });
-    // debugPane->addButton("Generate Heightfield", [this](){ makeHeightfield(imageName, scale, "model/heightfield.off"); });
-
-    debugWindow->pack();
+		GuiPane* renderingPane = debugPane->addPane("Test Max Foley's rendering algorithm");
+		renderingPane->addLabel("Parameters");
+		renderingPane->addNumberBox("width",&renderWidth," pixels");
+		renderingPane->addNumberBox("height",&renderHeight," pixels");
+		renderingPane->addCheckBox("use fixed primitives",&fixedPrimitives);
+		renderingPane->addCheckBox("use multithreading",&multithreading);
+		renderingPane->addNumberBox("how many indirect rays do you want to use",&indirectRays," rays");
+		
+		
+		renderingPane->addButton("Go",
+		 	[this, rw = &renderWidth, rh = &renderHeight, fp = &fixedPrimitives, mt = &multithreading, ir = &indirectRays]() { 
+				App::MaxFoleyRender(*rw,*rh,*fp,*mt,*ir);
+			
+		 });    
+    
+		debugWindow->pack();
     debugWindow->setRect(Rect2D::xywh(0, 0, (float)window()->width(), debugWindow->rect().height()));
+}
+
+void App::MaxFoleyRender(int width, int height, bool fixedPrimitives, bool multithreading, int indirectRays)
+{
+	//display a waiting screen
+
+	//make a new image with the right resolution
+	shared_ptr<Image> img = Image::create(width,height,G3D::ImageFormat::RGB8());
+		
+	//run the helper function
+	Raycaster raycaster = Raycaster();
+
+	raycaster.RenderImage(activeCamera(), scene(), img, fixedPrimitives, multithreading, indirectRays);
+	
+	//gamma encoding 
+	
+	//save the image 
+	img->save("maxrender.jpg");
+	
+	//render the image
+	//shared_ptr<Texture> texture = make_shared(Texture());
+	//texture = texture->toImage(img);
+	
+	
 }
 
 

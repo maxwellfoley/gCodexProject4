@@ -1,3 +1,6 @@
+PART ONE
+
+
 1. What are the differences between the Scene* and shared_ptr<scene> data types in C++?
 
 shared_ptr gets deleted automatically (garbage collected) when not in use, and with * you have to delete it in the code. 
@@ -27,3 +30,25 @@ It calls System::findDataFile, which among other things finds stuff in System.ap
 6.You can create a material in a scene file from a Color3. There are many more ways to construct a G3D material, however. One of these takes separate lambertian, glossy, emissive, and transmissive values. Speculate on why a homogeneous material (i.e., one without a pattern or image) would require four separate “colors” in its specification. 
 
 To model objects with strange reflective properties. Like if an object is red but reflects blue light… why not I guess
+
+
+PART TWO
+
+1. G3D uses some real-time rendering tricks to fake reflections of the sky, but if you fly along the shore of my island, you'll see that the water doesn't actually reflect the mountains. How could you simulate the image of the missing reflection in a plane of water or a mirror using only nonreflective 3D models? 
+
+If it's going to be something like water and sky you could just put the reflection in the texture probably
+Otherwise if it's in a mirror you could build a simplified reverse image of the scene inside the mirror 
+
+2. The underlying renderer converts all models into triangles, which you can see in the wireframe renderings. Why are triangle meshes the preferred primitive compared to, say, quadrilaterals, which would be more space efficient and are often easier for modeling? 
+
+Everything can be split into triangles, but triangles cannot be turned into other things
+Therefore the underlying renderer usually works on triangle shapes so it can work on everything
+
+3. The regular tessellation we used for heightfields is inefficient. It will allocate the same number of triangles for flat portions of the heightfield that need few triangles as for very hilly ones that need many to accurately represent the shape. Propose an alternative algorithm for computing a more efficient triangular tessellation for a given heightfield. Do not actually implement your algorithm. You may invent one on your own or use external resources to discover existing algorithms. 
+
+Put all squares of the grid in a queue
+Go through them in order and then see if you can make a 2x2 square with the given square on the top left where its basically flat
+If yes try 3x3, 4x4, etc until it doesnt work
+Make that square and take these ones out of the queue
+Iterate
+Idk if this would actually work 
