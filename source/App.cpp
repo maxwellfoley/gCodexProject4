@@ -409,6 +409,7 @@ void App::makeGUI() {
     debugWindow->setVisible(true);
     developerWindow->videoRecordDialog->setEnabled(true);
 
+/*
     GuiPane* infoPane = debugPane->addPane("Cylinder time", GuiTheme::ORNATE_PANE_STYLE);
 		// add cylinder to scene
 		infoPane->addLabel("Create a cylinder");
@@ -423,14 +424,14 @@ void App::makeGUI() {
 			
 		 });    
     infoPane->pack();
-		
+		*/
 		GuiPane* renderingPane = debugPane->addPane("Test Max Foley's rendering algorithm");
 		renderingPane->addLabel("Parameters");
 		renderingPane->addNumberBox("width",&renderWidth," pixels");
 		renderingPane->addNumberBox("height",&renderHeight," pixels");
 		renderingPane->addCheckBox("use fixed primitives",&fixedPrimitives);
 		renderingPane->addCheckBox("use multithreading",&multithreading);
-		renderingPane->addNumberBox("how many indirect rays do you want to use",&indirectRays," rays");
+		renderingPane->addNumberBox("indirect rays",&indirectRays," rays");
 		
 		
 		renderingPane->addButton("Go",

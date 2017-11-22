@@ -1,0 +1,2 @@
+.ice-tmp/gcodex_paths/osx-x86_64-clang++8.1/DEBUG/source/App.o
+.ice-tmp/gcodex_paths/osx-x86_64-clang++8.1/DEBUG/source/Raycaster.o

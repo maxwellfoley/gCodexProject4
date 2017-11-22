@@ -1,23 +1,213 @@
 #include "Raycaster.h"
 
-
-void Raycaster::RenderImage(shared_ptr<Camera> camera, shared_ptr<Scene> scene, shared_ptr<Image> & img, bool fixedPrimitives, bool multithreading, int indirectRays)
+TriTree tt;
+shared_ptr<Image> & img;
+shared_ptr<Camera> camera;
+void Raycaster::RenderImage(shared_ptr<Camera> _camera, shared_ptr<Scene> scene, shared_ptr<Image> & __img, RaycasterOptions options)
 {
-	for(int j = 0; j < img->height(); j++)
-	{
-		for(int i = 0; i < img->width(); i++)
-		{	
-			Color3 color = GetPixelColor(camera, scene, i, j, img->width(), img->height(), fixedPrimitives, multithreading, indirectRays);
-			img->set(i, j, color);
+	img = __img;
+	camera = _camera;
+	
+	//get all triangles and etc. in the scene	
+	Array<shared_ptr<Surface> > surfaceArray = Array<shared_ptr<Surface> >();
+	scene->onPose(surfaceArray);
+	tt.setContents(surfaceArray);
+	
+	//get all lights in scene
+	Array<shared_ptr<Light>> lights;
+	scene->getTypedEntityArray(lights);
+
+	Color3 modulationBuffer[img->width()*img->height()];
+	Color3 colorBuffer[img->width()*img->height()];
+
+	Ray rayBuffer[img->width()*img->height()];
+	UniversalSurfel surfelBuffer[img->width()*img->height()];
+	Biradiance3 biradianceBuffer[img->width()*img->height()];
+	Ray shadowRayBuffer[img->width()*img->height()];
+	bool lightShadowedBuffer[img->width()*img->height()];
+	
+	
+	//G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+	//[this,_img = &img, _camera = &camera, _scene = &scene, fp = &fixedPrimitives, ir = &indirectRays](Point2int32 p){
+		
+		//Color3 color; 
+		for(int i = 0; i < options.numRays; i++)
+		{
+			//generate primary rays 
+			Raycaster::GenerateRay(rayBuffer);
+			
+			//initialize the modulationBuffer to Color3(1 / paths per pixel)
+			G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+			[this,_img = &img](Point2int32 p){
+				modulationBuffer[img->width()*p.y + p.x] = Color3(1/numRays);
+				colorBuffer[img->width()*p.y + p.x] = Color3(0);
+			});
+			
+			//repeat for the number of scattering events:
+			for(int j = 0; j < options.numScatteringEvents; j++)
+			{
+				//intersect all rays, storing the result in surfelbuffer
+				Raycaster::IntersectRay(rayBuffer, surfelBuffer);
+				
+				//add emissive terms
+				G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+				[this,_img = &img](Point2int32 p){
+					colorBuffer[img->width()*p.y + p.x] += surfelBuffer[img->width()*p.y + p.x]->emittedRadiance()*modulationBuffer[img->width()*p.y + p.x];
+				});
+				
+				
+				//if there are lights, do lights
+				//TODO: eventually change this to importance sampling 
+				if(lights.size() > 0)
+				{
+					int k = randint(0, lights.size()-1);
+					//get ray for shadow calculation
+					Raycaster::GetShadowRay(lights[k], surfelBuffer, shadowRayBuffer);
+					
+					//figure out whether or not the surfel is in shadow
+					Raycaster::ShadowTest(shadowRayBuffer, surfelBuffer, lightShadowedBuffer);
+						 
+					G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+					[this,_img = &img](Point2int32 p){
+						if(!lightShadowedBuffer[img->width()*p.y + p.x])
+						{
+							float multiplier = lightDir.dot(surfel->geometricNormal);
+
+							//shade the pixel
+							Color3 addTo = surfel->lambertianReflectivity * multiplier * lights[k]->biradiance(surfel->position);
+							if(addTo.r < 0.0){ addTo.r = 0.0;}
+							if(addTo.g < 0.0){ addTo.g = 0.0;}
+							if(addTo.b < 0.0){ addTo.b = 0.0;}
+							
+							colorBuffer[img->width()*p.y + p.x] += addTo*modulationBuffer[img->width()*p.y + p.x];
+						}
+					});
+				}
+				//if not the last iteration, scatter the rays 
+				if(j < options.numScatteringEvents-1)
+				{
+					Raycaster::ScatterRay(rayBuffer, surfelBuffer, modulationBuffer);
+				}
+			}
 		}
-	}
+
+
 	debugPrintf("process done \n");
 	
 }
 
-Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  scene, int x, int y, int width, int height, bool fixedPrimitives, bool multithreading, int indirectRays)
-{			
+void Raycaster::GenerateRay(Ray * rayBuffer)
+{
+
+	G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+	[this,_img = &img, _camera = &camera](Point2int32 p){
+		
+		//calculate ray direction and origin based on camera position
+		const float side = -2.0f * tan(	camera->fieldOfViewAngle ()  / 2.0f);
+
+		float _x, _y, _z, _ya, _p, _r;
+		camera->frame().getXYZYPRDegrees(_x, _y, _z, _ya, _p, _r);
+
+		Point3 p = Point3( camera->nearPlaneZ() * (float(p.x) / float(img->width()) - 0.5f) * side * float(img->width()) / float(img->height()) , 
+		                camera->nearPlaneZ() * -(float(p.y) / float(img->height()) - 0.5f) * side, 
+		                camera->nearPlaneZ())  + Point3(_x,_y,_z);
+		Vector3 dir = p-Point3(_x,_y,_z);
+		dir = dir.unit();	
+ 		rayBuffer[img->width()*p.y + p.x] = Ray(p,dir);
+
+	});
+}
+
+void Raycaster::IntersectRay(Ray * rayBuffer, UniversalSurfel * surfelBuffer)
+{
+	G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+	[](Point2int32 p){
+
+		Ray ray = rayBuffer[img->width()*p.y + p.x];
+
+		Point3 P = ray.origin();
+		Vector3 w = ray.direction();
+		 //debugPrintf("ray point %f %f %f \n",P.x,P.y,P.z);
+		//debugPrintf("ray direction %f %f %f \n",w.x,w.y,w.z);
+
+		TriTreeBase::Hit hit;
+		bool foundHit = tt.intersectRay(ray, hit);
+
+		//if it hit something
+		if(foundHit)
+		{
+				lazy_ptr<UniversalMaterial> material = tt[hit.triIndex].material();
+
+				
+				shared_ptr<UniversalSurfel> surfel = std::make_shared<UniversalSurfel>(tt[hit.triIndex],hit.u,hit.v,hit.triIndex,tt.vertexArray(),false);
+				surfel->sample(tt[hit.triIndex],hit.u,hit.v,hit.triIndex,tt.vertexArray(),false,material.resolve().get());
+				surfel->position = P+w*hit.distance;
+
+				surfelBuffer[img->width()*p.y + p.x] = surfel;
+			
+		}
+		else
+		{
+			surfelBuffer[img->width()*p.y + p.x] = shared_ptr<UniversalSurfel>();
+		}
+	});
 	
+}
+
+void Raycaster::GetShadowRay(shared_ptr<Light> light, UniversalSurfel * surfelBuffer, Ray* shadowRayBuffer)
+{
+	G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+	[](Point2int32 p){
+		
+		Vector3 pos = light->position().xyz();
+		Vector3 lightDir = pos - surfelBuffer[img->width()*p.y + p.x]->position;
+		lightDir = lightDir.unit();
+		shadowRayBuffer[img->width()*p.y + p.x] = Ray(pos, -lightDir);
+	});
+	
+}
+
+void Raycaster::ShadowTest(Ray * shadowRayBuffer, UniversalSurfel * surfelBuffer, bool* lightShadowedBuffer)
+{
+	G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+	[](Point2int32 p){
+		
+		TriTreeBase::Hit hit;
+		bool foundHit = tt.intersectRay(shadowRayBuffer[img->width()*p.y + p.x], hit);
+		if(foundHit && hit.distance < Vector3.magnitude(shadowRayBuffer[img->width()*p.y + p.x] - surfelBuffer[img->width()*p.y + p.x]->position))
+		{
+			lightShadowedBuffer[img->width()*p.y + p.x] = true;
+		}
+		else
+		{
+			lightShadowedBuffer[img->width()*p.y + p.x] = false;
+		}
+
+	});
+}
+
+void Raycaster::ScatterRay(Ray * rayBuffer, UniversalSurfel * surfelBuffer, Color3 * modulationBuffer)
+{
+	G3D::runConcurrently(Point2int32(0, 0), Point2int32(img->width(), img->height()), 
+	[](Point2int32 p){
+		shared_ptr<UniversalSurfel> surfel = surfelBuffer[img->width()*p.y + p.x];
+
+		Vector3 w_before = rayBuffer[img->width()*p.y + p.x].direction();
+		Random rng =  G3D::Random::threadCommon();
+		Vector3 w_after;
+		Color3 weight; 
+		
+		surfel.scatter(PathDirection::EYE_TO_SOURCE, w_before, false, rng, weight, w_after);
+		modulationBuffer[img->width()*p.y + p.x]*=weight;
+		
+		rayBuffer[img->width()*p.y + p.x] = Ray(surfel->position, w_after);
+	});
+
+}
+
+Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  scene, int x, int y, int width, int height, bool fixedPrimitives, int indirectRays)
+{			
+	/*
 	//calculate ray direction and origin based on camera position
   const float side = -2.0f * tan(	camera->fieldOfViewAngle ()  / 2.0f);
   float _x, _y, _z, _ya, _p, _r;
@@ -30,11 +220,12 @@ Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  sc
 	dir = dir.unit();	
 	Ray ray = Ray(p,dir);
 	
-	
+	*/
+	/*
 	debugPrintf("\n\nCalculating pixel %i, %i\n",x,y);
-	shared_ptr<UniversalSurfel> surfel = CastSingleRay(scene, ray );
+	shared_ptr<UniversalSurfel> surfel = CastSingleRay(scene, ray, fixedPrimitives);
 	
-
+*/
 	//simply tell if it hits something 
 	if(notNull(surfel))
 	{
@@ -63,7 +254,7 @@ Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  sc
 				{
 					//test for shadow, cast ray from light
 					Ray shadowTestRay = Ray(pos, -lightDir);
-					shared_ptr<UniversalSurfel> shadowTestSurfel = CastSingleRay(scene, shadowTestRay);
+					shared_ptr<UniversalSurfel> shadowTestSurfel = CastSingleRay(scene, shadowTestRay, fixedPrimitives);
 					
 					
 					if(notNull(shadowTestSurfel) && abs((pos - shadowTestSurfel->position).magnitude())+.1 < abs(pos-surfel->position).magnitude())
@@ -73,10 +264,11 @@ Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  sc
 				}
 				if(!shadowed)
 				{
-					debugPrintf("lightdir %f %f %f \n", lightDir.x, lightDir.y, lightDir.z);
-					debugPrintf("surfel normal %f %f %f \n", surfel->geometricNormal.x, surfel->geometricNormal.y, surfel->geometricNormal.z);
+					//debugPrintf("lightdir %f %f %f \n", lightDir.x, lightDir.y, lightDir.z);
+					//debugPrintf("surfel normal %f %f %f \n", surfel->geometricNormal.x, surfel->geometricNormal.y, surfel->geometricNormal.z);
 
 					float multiplier = lightDir.dot(surfel->geometricNormal);
+					debugPrintf("multiplier %f \n",multiplier);
 					Color3 addTo = lamb * multiplier * lights[i]->biradiance(surfel->position);
 					if(addTo.r < 0.0){ addTo.r = 0.0;}
 					if(addTo.g < 0.0){ addTo.g = 0.0;}
@@ -90,7 +282,7 @@ Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  sc
 			Vector3 indirectLightDir = Vector3::hemiRandom(surfel->geometricNormal);
 			Ray indirectLightRay = Ray(surfel->position, indirectLightDir.unit());
 			Color3 otherLamb = Color3(0.0,0.0,0.0);
-			shared_ptr<UniversalSurfel> indirectSurfel = CastSingleRay(scene,indirectLightRay);
+			shared_ptr<UniversalSurfel> indirectSurfel = CastSingleRay(scene,indirectLightRay, fixedPrimitives);
 			if(notNull(indirectSurfel)) {otherLamb = indirectSurfel->lambertianReflectivity; } 
 			float multiplier = indirectLightDir.dot(surfel->geometricNormal);
 
@@ -112,109 +304,34 @@ Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  sc
 	
 }
 
-shared_ptr<UniversalSurfel> Raycaster::CastSingleRay(shared_ptr<Scene> scene, Ray ray)
+shared_ptr<UniversalSurfel> Raycaster::CastSingleRay(shared_ptr<Scene> scene, Ray ray, bool fixedPrimitives)
 {
 	
-	//get all triangles and etc. in the scene
-	TriTree tt = TriTree();
-	
-	Array<shared_ptr<Surface> > surfaceArray = Array<shared_ptr<Surface> >();
-	scene->onPose(surfaceArray);
-	tt.setContents(surfaceArray);
+
 
 	Point3 P = ray.origin();
 	Vector3 w = ray.direction();
-	debugPrintf("ray point %f %f %f \n",P.x,P.y,P.z);
-	debugPrintf("ray direction %f %f %f \n",w.x,w.y,w.z);
+	 //debugPrintf("ray point %f %f %f \n",P.x,P.y,P.z);
+	//debugPrintf("ray direction %f %f %f \n",w.x,w.y,w.z);
 
-	//find the closest triangle in the scene
-	bool foundHit = false;
-	float * minB;
-	float minT = 10000000;
-	int minI = -1;
-	
-	for(int i = 0; i < tt.size() ; i++)
-	{
-		float b [3];
-		float t = 10000000;
-		
-		//MY VERSION 
-		foundHit = IntersectTriangle(ray, tt[i].toTriangle(tt.vertexArray()),b,t);
-		//G3D VERSION 
-		//foundHit = tt[i].toTriangle(tt.vertexArray()).intersect(ray,t,b);
+	TriTreeBase::Hit hit;
+	bool foundHit = tt.intersectRay(ray, hit);
 
-		if(t < minT && t >= 0.0f) { minB = b; minT = t; minI = i;}
-	}
-	
 	//if it hit something
-	if(minI > -1)
+	if(foundHit)
 	{
-		debugPrintf("Triangle index %i\n",minI);
-		debugPrintf("barycenters %f %f %f\n",minB[0],minB[1],minB[2]);
-		debugPrintf("distance %f \n",minT);
+			lazy_ptr<UniversalMaterial> material = tt[hit.triIndex].material();
 
-		//all of this just to get the surfel information
-		TriTreeBase::Hit hit = TriTreeBase::Hit();
-		
-		hit.triIndex = minI;
-		hit.distance = minT;
-		
-		Point2 texCoord =  Point2(0.0f,0.0f); 
-		Point2 triUVs[3] ;
+			
+			shared_ptr<UniversalSurfel> surfel = std::make_shared<UniversalSurfel>(tt[hit.triIndex],hit.u,hit.v,hit.triIndex,tt.vertexArray(),false);
+			surfel->sample(tt[hit.triIndex],hit.u,hit.v,hit.triIndex,tt.vertexArray(),false,material.resolve().get());
+			surfel->position = P+w*hit.distance;
 
-		for(int j=0;j <3; j++)
-		{
-			Point2 equivUV = tt.vertexArray().vertex[tt[minI].index[j]].texCoord0;
-			triUVs[j] = tt[minI].texCoord(tt.vertexArray(), j);
-			texCoord += minB[j]*triUVs[j];
-		}
+			return surfel;
 		
-		hit.u = texCoord.x;
-		hit.v = texCoord.y;
-		
-		lazy_ptr<UniversalMaterial> material = tt[minI].material();
-
-		
-		shared_ptr<UniversalSurfel> surfel = std::make_shared<UniversalSurfel>(tt[minI],hit.u,hit.v,minI,tt.vertexArray(),false);
-		surfel->sample(tt[minI],hit.u,hit.v,minI,tt.vertexArray(),false,material.resolve().get());
-		surfel->position = P+w*minT;
-
-		return surfel;
 	}
 	else
 	{
 		return shared_ptr<UniversalSurfel>();
 	}
-}
-
-bool Raycaster::IntersectTriangle(Ray ray, Triangle t, float b[3], float& dist)
-{
-	Point3 P = ray.origin();
-	Vector3 w = ray.direction();
-
-	//edge vectors
-	const Vector3& e_1 = t.vertex(1) - t.vertex(0);
-	const Vector3& e_2 = t.vertex(2) - t.vertex(0);
-
-	// Face normal
-	const Vector3& n = e_1.cross(e_2).direction();
-
-	const Vector3& q = w.cross(e_2);
-	const float a = e_1.dot(q);
-
-	// Backfacing / nearly parallel, or close to the limit of precision?
- 	if ((n.dot(w) >= 0) || (abs(a) <= .0000001)) return false;
-	
-	const Vector3& s = (P - t.vertex(0)) / a;
-	const Vector3& r = s.cross(e_1);
-	
-  b[0] = s.dot(q);
-	b[1] = r.dot(w);
-	b[2] = 1.0f - b[0] - b[1];
-
-	// Intersected outside triangle?
-	if ((b[0] < 0.0f) || (b[1] < 0.0f) || (b[2] < 0.0f)) return false;
-
-  dist = e_2.dot(r);
-	return (dist >= 0.0f);
-}
+}	

@@ -7,7 +7,7 @@
 App	source/App.cpp	/^App::App(const GApp::Settings& settings) : GApp(settings) {$/;"	f	class:App
 App	source/App.h	/^class App : public GApp {$/;"	c
 CastSingleRay	source/Raycaster.cpp	/^shared_ptr<UniversalSurfel> Raycaster::CastSingleRay(shared_ptr<Scene> scene, Ray ray)$/;"	f	class:Raycaster
-GetPixelColor	source/Raycaster.cpp	/^Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  scene, int x, int y, int width, int height, bool fixedPrimitives, bool multithreading, int indirectRays)$/;"	f	class:Raycaster
+GetPixelColor	source/Raycaster.cpp	/^Color3 Raycaster::GetPixelColor(shared_ptr<Camera> camera, shared_ptr<Scene>  scene, int x, int y, int width, int height, bool fixedPrimitives, int indirectRays)$/;"	f	class:Raycaster
 IntersectTriangle	source/Raycaster.cpp	/^bool Raycaster::IntersectTriangle(Ray ray, Triangle t, float b[3], float& dist)$/;"	f	class:Raycaster
 MaxFoleyRender	source/App.cpp	/^void App::MaxFoleyRender(int width, int height, bool fixedPrimitives, bool multithreading, int indirectRays)$/;"	f	class:App
 Raycaster	source/Raycaster.h	/^class Raycaster {$/;"	c
